@@ -1,0 +1,113 @@
+#!/bin/sh
+# [Ctrl + c], [Ctrl + z]와 같은 인터럽트를 방지
+trap "echo '\n[경고]\n인터럽트를 발생시키지 마세요.\n'" INT TSTP TERM
+
+
+printf "BoB Linux에서는 기본 계정인 'rookie'를 제공합니다.\n\n"
+printf "하지만 사용자가 원하는 계정을 생성할 수도 있습니다.\n"
+printf "새로운 계정 생성시 기본 계정인 'rookie'는 유지됩니다.\n\n"
+
+# 계정 생성 여부를 선택하기 위한 반복문
+while :
+do
+	printf "기본 계정을 유지하려면 '1'을, 새로운 계정을 생성하려면 '2'를 입력하세요. : "
+	read num
+	if [ ${num} -eq 1 ] > /dev/null 2>&1 ; then
+		sudo sed -i '/init_account/d' /home/rookie/.bashrc
+		sudo sed -i "s,\(\User privilege specification\),\1\nrookie\tALL=(ALL:ALL) ALL,g" /etc/sudoers
+		sudo sed -i '/NOPASSWD/d' /etc/sudoers
+		rm -f init_account*
+		clear
+		# 계정 세팅 후 메시지 출력
+		printf "********************************************************************\n"
+		printf "모든 설정이 완료되었습니다.\n"
+		printf "해당 메시지가 정상적으로 출력된다면 계정 생성이 성공한 것입니다.\n"
+		printf "트레이닝 기능을 이용하시려면 터미널에서 \"trainer\"를 입력하세요.\n"
+		printf "또한 보안 점검 기능을 이용하시려면 터미널에서 \"secucheck\"를 입력하세요.\n"
+		printf "도움말을 보시려면 '/home/${name}/README'(을)를 참고하세요\n\n"
+		printf "\"less ~/README\"를 입력하셔서 방향키로 내용을 읽을 수 있습니다.\n"
+		printf "위 상태에서 도움말 읽기를 종료하시려면 'q'를 입력하세요\n"
+
+		printf "[Enter]를 입력하시면 진행합니다.\n"
+		printf "********************************************************************\n"
+		exit
+	elif [ ${num} -eq 2 ] > /dev/null 2>&1 ; then
+		break
+	elif [ ${num} -eq 3 ] > /dev/null 2>&1 ; then
+		exit
+	else
+		printf "잘못된 값을 입력하셨습니다. 다시 입력해주세요.\n\n"
+	fi
+done
+
+# 계정을 생성하기 위한 계정 이름을 입력받는 반복문
+# 이미 있는 계정인 root와 rookie 등 몇 개의 계정명은 비허용
+
+printf "\n새로운 계정 생성 시 'root', 'rookie', 'admin'을 제외한 계정 이름으로 설정해주세요.\n"
+printf "또한 영문 소문자로 이름을 설정해주세요. 잘못된 이름 설정시 계정 생성이 실패합니다.\n\n"
+while :
+do
+	printf "새로 생성할 계정 이름을 입력하세요 : "
+	read name
+	if [ "${name}" = "root" -o "${name}" = "rookie" -o "${name}" = "admin" -o "${name}" = "administrator" -o "${name}" = "" ] ; then
+		printf "잘못된 값을 입력하셨습니다. 다시 입력해주세요.\n\n"
+	else
+		break
+	fi
+done
+ 
+printf "새로 생성할 계정 비밀번호를 입력하세요 : "
+read password
+sleep 1
+printf "\n계정 생성 중입니다...\n\n"
+
+# 입력받은 값을 이용해 새로운 유저를 생성
+# gpasswd 명령어를 이용해 새로 생성된 계정을 'video' 그룹에 추가
+# fbterm을 사용하기 위해서는 video 그룹 안에 속해야 함
+# 또한 해당 유저의 이름으로 sudoers 파일에 몇 가지 명령어를 추가
+# init을 위한 명령어기 때문에 init account install이 종료될 때 sudoers에서 명령어 삭제
+(echo $password; echo ${password}) | sudo adduser ${name} > /dev/null 2>&1
+sleep 1
+printf "BoB Linux를 위한 기타 설정 중입니다.\n\n"
+sleep 1
+sudo gpasswd -a $name video > /dev/null 2>&1
+sudo sed -i "s,\(\User privilege specification\),\1\n${name}\tALL=NOPASSWD: /usr/sbin/userdel\n${name}\tALL=NOPASSWD: /usr/bin/sed,g" /etc/sudoers
+
+# 다음 쉘 스크립트를 실행하기 위한 문장
+sudo sed -i -e "\$a/home/${name}/init_account2" /home/${name}/.bashrc
+
+# 현재 디렉토리에 있는 파일을 홈 디렉토리로 이동시킴
+# sudo mv ./* /home/${name}/
+sudo mv ./init_account2 /home/${name}/
+sudo mv ./init_account3 /home/${name}/
+sudo cp ./README /home/${name}/
+
+# bashrc에 있는 자동 시작 스크립트를 제거
+sudo sed -i '/init_account/d' /home/rookie/.bashrc
+rm -f /home/rookie/init_account1
+
+# rookie 계정 삭제 시 스크립트 : ssh 등 실습으로 계정 유지
+# # rookie 계정을 잠금
+# (echo "rookie"; echo "THISACCOUNTWASLOCKED"; echo "THISACCOUNTWASLOCKED"; ) | passwd > /dev/null 2>&1
+
+# 생성한 계정으로 su하며, ~/.bashrc에 등록된 쉘 스크립트 파일(init_account2)이 실행됨
+sudo su - ${name}
+
+# 계정 생성에 실패했을 때 실행
+sudo sed -i '/init_account/d' /home/rookie/.bashrc
+sudo sed -i "s,\(\User privilege specification\),\1\nrookie\tALL=(ALL:ALL) ALL,g" /etc/sudoers
+sudo sed -i '/NOPASSWD/d' /etc/sudoers
+rm -f init_account*
+printf "계정 생성에 실패했습니다. 이름에 잘못된 문자가 포함되었습니다.\n"
+printf "기본 계정인 'rookie'로 이용해 주세요\n\n"
+# 계정 세팅 후 메시지 출력
+clear
+printf "********************************************************************\n"
+printf "트레이닝 기능을 이용하시려면 터미널에서 \"trainer\"를 입력하세요.\n"
+printf "또한 보안 점검 기능을 이용하시려면 터미널에서 \"secucheck\"를 입력하세요.\n"
+printf "도움말을 보시려면 '/home/rookie/README'(을)를 참고하세요\n\n"
+printf "\"less /home/rookie/README\"를 입력하셔서 방향키로 내용을 읽을 수 있습니다.\n"
+printf "위 상태에서 도움말 읽기를 종료하시려면 'q'를 입력하세요\n\n"
+
+printf "[Enter]를 입력하시면 진행합니다.\n"
+printf "********************************************************************\n"

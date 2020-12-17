@@ -1,0 +1,42 @@
+#!/bin/sh
+# [Ctrl + c], [Ctrl + z]와 같은 인터럽트를 방지
+trap "echo '\n[경고]\n인터럽트를 발생시키지 마세요.\n'" INT TSTP TERM
+
+
+# 계정 이름을 저장
+name=$(whoami)
+
+# 'rookie' 계정 삭제 : rookie 계정 유지하기로 변경
+# sudo userdel -r rookie > /dev/null 2>&1
+
+# init_account 관련 내용 ~/.bashrc에서 모두 삭제
+# 설치를 진행하기 위해 NOPASSWD로 sudoers에 등록된 내용 모두 삭제
+# 쉘 스크립트 파일 삭제
+# issue에 뜨는 초기 계정 설정 내용 삭제
+
+sudo sed -i '/init_account/d' /home/${name}/.bashrc
+sudo sed -i "s,\(\User privilege specification\),\1\n${name}\tALL=(ALL:ALL) ALL,g" /etc/sudoers
+sudo sed -i "s,\(\User privilege specification\),\1\nrookie\tALL=(ALL:ALL) ALL,g" /etc/sudoers
+sudo sed -i '/rookie/d' /etc/issue
+sudo sed -i '/NOPASSWD/d' /etc/sudoers
+rm -f ./init_account3
+
+clear
+
+# 새로운 계정 생성 완료 후 메시지 출력
+printf "********************************************************************\n"
+printf "모든 설정이 완료되었습니다.\n"
+printf "해당 메시지가 정상적으로 출력된다면 계정 생성이 성공한 것입니다.\n"
+printf "트레이닝 기능을 이용하시려면 터미널에서 \"trainer\"를 입력하세요.\n"
+printf "또한 보안 점검 기능을 이용하시려면 터미널에서 \"secucheck\"를 입력하세요.\n"
+printf "도움말을 보시려면 '/home/${name}/README'(을)를 참고하세요\n\n"
+printf "\"less ~/README\"를 입력하셔서 방향키로 내용을 읽을 수 있습니다.\n"
+printf "위 상태에서 도움말 읽기를 종료하시려면 'q'를 입력하세요\n\n"
+
+printf "[Enter]를 입력하시면 진행합니다.\n"
+printf "********************************************************************\n"
+
+# Enter를 입력받기 위한 구문
+read input
+
+exit

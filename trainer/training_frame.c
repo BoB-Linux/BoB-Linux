@@ -1,0 +1,13 @@
+#include "func.h"
+
+void training_instruction(void)
+{
+	create_defdir();
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   	/* Insert your codes */
+
+   	// Delete default directory
+	delete_defdir();
+}

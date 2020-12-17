@@ -1,0 +1,47 @@
+#!/bin/sh
+# [Ctrl + c], [Ctrl + z]와 같은 인터럽트를 방지
+trap "echo '\n[경고]\n인터럽트를 발생시키지 마세요.\n'" INT TSTP TERM
+
+
+# fbterm 실행
+# 폰트 파일을 설정하기 위해서는 fbterm을  실행해야 함
+fbterm
+clear
+
+# 계정의 이름을 저장
+name=$(whoami)
+
+# rookie 계정 잠금 : rookie 계정 유지하는 것으로 변경되어 주석 처리
+# sudo usermod -e 2000-01-01 rookie
+
+# ~/.bashrc에서 자동으로 실행되게 해놓은 쉘 스크립트(init_account2) 제거
+# fbterm의 폰트 크기 조정
+# 쉘 스크립트 제거
+
+sudo sed -i '/init_account/d' /home/${name}/.bashrc
+sudo sed -i "/font-size/ c\font-size=20" ~/.fbtermrc
+sudo sed -i "/history-lines/ c\history-lines=2000" ~/.fbtermrc
+rm -f ./init_account2
+
+# 다음 쉘 스크립트를 실행하기 위한 문장
+# ~/.bashrc에 다음 쉘 스크립트를 등록하여 로그인 시 바로 실행되게 함
+sudo sed -i -e "\$a/home/${name}/init_account3" /home/${name}/.bashrc
+clear
+printf "설정을 마치기 위해 재부팅을 실행합니다.\n\n"
+printf "다시 재부팅이 완료되면 방금 생성한 계정으로 로그인 해주세요.\n\n"
+printf "재부팅 이후 모든 설정이 완료된 후에는 결과 메시지가 출력됩니다.\n"
+printf "이후의 도움말을 보려면 홈 디렉토리의 README 파일을 참고하세요.\n\n"
+printf "Enter를 입력하면 재부팅이 시작됩니다.\n"
+
+# Enter를 입력받기 위한 구문
+read input
+
+printf " 3 초후에 종료됩니다.\n\n"
+sleep 1
+printf " 2 초후에 종료됩니다.\n\n"
+sleep 1
+printf " 1 초후에 종료됩니다.\n\n"
+sleep 1
+
+# 재부팅
+sudo systemctl reboot
