@@ -14,14 +14,14 @@
 #### BoB Linux tools
 ##### Trainer
 - 소스 코드
-  - \"trainer\" 디렉토리 위치
+  -  GitHub 레포지토리 \"trainer\" 디렉토리 위치
   - make 명령어로 빌드
 - BoB Linux에서 사용
   - 콘솔 창에 'trainer' 입력
   - \"/usr/local/bin/trainer\"에 위치
 ##### Security Check
 - 소스 코드
-  - \"security_check\" 디렉토리 위치
+  - GitHub 레포지토리 \"security_check\" 디렉토리 위치
 - BoB Linux에서 사용
   - 콘솔 창에 'secucheck' 입력
 -----
