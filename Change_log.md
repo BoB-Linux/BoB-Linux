@@ -1,3 +1,5 @@
+## CUI
+
 ### Ver 0.0.1
 - Ubuntu base rootfs에 커널 빌드
 - 부팅 성공
@@ -72,3 +74,12 @@
 - rookie 계정 이용 시에도 초기 도움말 출력
   - README 파일 less 명령어를 통해 읽게 조언
 - 계정 설정 시 일부 텍스트 가독성 향상
+
+-----
+
+## GUI
+### GUI Ver 0.1.0 (Beta)
+- BoB Linux 초기 버전을 바탕으로 GUI 환경 구성
+  - Cinnamon 데스크탑 환경을 채택
+  - GUI 환경에서는 터미널 한글 입출력이 쉽게 구현 가능하기 때문에 fbterm 미사용
+- trainer / secucheck 명령어를 통해 트레이닝 기능과 보안 점검 프로그램 실행(CUI와 동일)
