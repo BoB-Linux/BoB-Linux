@@ -52,7 +52,8 @@
 - 이제 **BoB-Linux**를 실행하기 위한 가상 머신인 **VirtualBox** 설치를 완료했습니다.
 - 이번 과정에서는 VirtualBox에서 BoB-Linux를 간단하게 설치할 수 있는 BoB-Linux.ova 파일을 다운로드 받을 것입니다.
 - 아래의 링크를 클릭해서 **BoB-Linux.ova** 파일을 다운로드 받으세요.
-  - [BoB-Linux.ova 다운로드 링크](https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux%20Ver%200.2.4.ova)
+  - [BoB-Linux.ova 다운로드 링크](https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux)
+  - [BoB-Linux.ova 다운로드 링크(GUI)](https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux%20GUI)
 -----
 ### Step 3. VirtualBox에 BoB-Linux.ova 가져오기
 - 마지막 과정입니다. 이번 과정에서는 VirtualBox의 기능인 **가상 시스템 가져오기**를 이용하여 BoB Linux를 설치할 것입니다.
