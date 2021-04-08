@@ -197,4 +197,17 @@
 - Debian 및 Ubuntu 계열의 배포판에서 사용할 수 있습니다.
 - 이러한 **BoB Linux**의 소스 코드들은 **BoB Linux 프로젝트 팀 BlackMoon**의 github에서 다운로드 받을 수 있습니다.
 - 아래의 URL로 접속해서 **BoB Linux**의 프로그램들이 어떻게 만들어져있는가 확인하실 수 있습니다.
-  - [BoB Linux GitHub 레포지토리](https://github.com/black6765/BoB-Linux)
+  - [BoB Linux GitHub 레포지토리](https://github.com/BoB-Linux/BoB-Linux)
+
+#### Extra Step
+##### 가상머신에서 창 크기가 너무 작을 때
+![image](https://user-images.githubusercontent.com/67176669/114098638-98f05580-98fc-11eb-9945-6a5e09508ef1.png)
+
+  - 해상도에 따라서 VirtualBox에서 실행한 **BoB Linux**의 창 크기가 너무 작을 수 있습니다.
+  - 이 때 VirtualBox의 **크기 조정 모드**를 사용하면 됩니다.
+  
+##### 글자 크기를 변경하고 싶을 때
+- **BoB Linux** 사용 시 출력되는 글자 크기를 변경하고 싶을 때는 다음을 통해 글자 크기를 변경할 수 있습니다.
+  - ```nano $HOME/.fbtermrc``` 또는 ```vim $HOME/.fbtermrc```
+  - **font-size=[숫자]**에서 **[숫자]** 부분을 적절하게 변경하면 됩니다. 
+  - 기본 설정은 20이며. **[숫자]**가 높아질수록 글자 크기가 커집니다. 
