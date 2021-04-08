@@ -29,8 +29,8 @@
  - 배포 링크
    - https://boblinux.fossa.kr:21443/blackmoon/boblinux
    - 다운로드 링크
-     - CUI 버전(Ver 1.0.0)      : https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux%20Ver%201.0.0.ova
-     - GUI 버전(Ver 0.1.0 Beta) : https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux%20GUI%20Ver%200.1.0.ova
+     - CUI 버전 : [BoB-Linux.ova 다운로드 링크](https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux)
+     - GUI 버전 : [BoB-Linux.ova 다운로드 링크(GUI)](https://boblinux.fossa.kr:21443/blackmoon/boblinux/-/raw/master/BoB%20Linux%20GUI)
  - BoB Linux에는 트레이닝 기능, 보안 점검 프로그램이 기본적으로 내장
  - 초기 계정 : rookie / rookie
  - 한글 입력 : [Ctrl + Space Bar]
