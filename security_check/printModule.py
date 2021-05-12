@@ -1,4 +1,5 @@
 # 출력 모듈
+# using in U_01.py - U_13.py, U_44.py - U_54.py
 
 # 글자색
 C_END    = "\033[0m"
